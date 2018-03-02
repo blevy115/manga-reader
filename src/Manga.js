@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Chapter from './Chapter.js'
-import List from './List.js'
+import MangaList from './MangaList.js'
+import ChapterList from './ChapterList'
 
 
 class Manga extends Component {
@@ -13,9 +14,8 @@ class Manga extends Component {
       chapter:""
     }
     this.changeChapter = this.changeChapter.bind(this)
-    this.changeManga = this.changeManga.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-  
+
 
   }
 
@@ -51,15 +51,9 @@ class Manga extends Component {
 
   }
 
-  changeManga(event) {
-    this.setState({series: event.target.value})
-    event.preventDefault()
-  }
 
-
-  changeChapter(event){
-    this.setState({chapter: event.target.value})
-    event.preventDefault()
+  changeChapter(chapter){
+    this.setState({chapter: chapter})
   }
 
   handleSubmit(event) {
@@ -100,11 +94,11 @@ class Manga extends Component {
 
         <label>
           Manga List
-          <List callbackParent={(newState) => this.onChildChanged(newState) }></List>
+          <MangaList callbackParent={(newState) => this.onChildChanged(newState) }></MangaList>
         </label>
         <label>
         Chapter
-        <input type="text" onChange={this.changeChapter} />
+        <ChapterList callbackParent={(chapter) => this.changeChapter(chapter)} series={this.state.series}></ChapterList>
         </label>
         <br />
         <input type="submit" value="Load Chapter!" />
