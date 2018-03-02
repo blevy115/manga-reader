@@ -18,7 +18,7 @@ class Page extends Component {
   render(){
     return(
       <div>
-        <img src={this.state.page}/>
+        <img src={this.state.page} onClick={this.props.imageClick}/>
       </div>
     )
   }
