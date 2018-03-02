@@ -9,6 +9,7 @@ class Chapter extends Component {
       page:0
     }
     this.handleClick= this.handleClick.bind(this)
+    this.nextChapter = this.nextChapter.bind(this)
   }
 
   componentWillReceiveProps(props){
@@ -21,12 +22,19 @@ class Chapter extends Component {
   }
   }
 
+  nextChapter(){
+    if (this.state.page === this.props.chapterLength - 1){
+      this.props.callbackParent()
+    }
+  }
+
   handleClick(){
     this.setState({ page: this.state.page + 1 })
+    this.nextChapter()
   }
   render(){
     if (this.state.chapter){
-      return <div onClick = {this.handleClick}><Page url={this.state.chapter[this.state.page]}></Page></div>
+      return <Page url={this.state.chapter[this.state.page]} imageClick = {this.handleClick}></Page>
     }
   return (
     <div>
