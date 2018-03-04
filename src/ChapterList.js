@@ -36,7 +36,7 @@ class ChapterList extends Component{
   render(){
     if (this.state.lastChapter){
       return (
-        <select onChange={this.chapterChoice}>
+        <select id="chapters" onChange={this.chapterChoice}>
           {Array.from({length: this.state.lastChapter}, (v, k) => k+1).map(number => <option value ={parseInt(number)}>{number}</option>)}
         </select>
       )

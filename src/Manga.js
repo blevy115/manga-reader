@@ -20,8 +20,9 @@ class Manga extends Component {
   }
 
   onChildChanged(newState) {
-     this.setState({ series: newState })
+     this.setState({ series: newState, chapter: 1 })
    }
+
 
   onNextChapter(){
     this.setState({chapter: parseInt(this.state.chapter) + 1})
@@ -48,7 +49,8 @@ class Manga extends Component {
         console.log('There was an error', ex);
       })
 
-
+      let list = document.getElementById('chapters');
+      list.value = chapterNumber
   }
 
 
