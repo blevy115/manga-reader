@@ -25,7 +25,8 @@ class Manga extends Component {
 
 
   onNextChapter(){
-    this.setState({chapter: parseInt(this.state.chapter) + 1})
+    this.setState({chapter: parseInt(this.state.chapter) + 1}, function(e){
+
     var base = this;
     let chapterNumber = parseInt(this.state.chapter)
     let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+chapterNumber;
@@ -51,10 +52,12 @@ class Manga extends Component {
 
       let list = document.getElementById('chapters');
       list.value = chapterNumber
+      })
   }
 
   onPrevChapter(){
-    this.setState({chapter: parseInt(this.state.chapter) - 1})
+    this.setState({chapter: parseInt(this.state.chapter) - 1}, function(e){
+
     var base = this;
     let chapterNumber = parseInt(this.state.chapter)
     let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+chapterNumber;
@@ -80,6 +83,7 @@ class Manga extends Component {
 
       let list = document.getElementById('chapters');
       list.value = chapterNumber
+      })
   }
 
 
@@ -88,6 +92,7 @@ class Manga extends Component {
   }
 
   handleSubmit(event) {
+
     var base = this;
     let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+this.state.chapter;
 
@@ -109,7 +114,6 @@ class Manga extends Component {
         window.alert('That chapter is not out yet, choose another')
         console.log('There was an error', ex);
       })
-
     event.preventDefault()
   }
 
@@ -127,6 +131,7 @@ class Manga extends Component {
           Manga List
           <MangaList callbackParent={(newState) => this.onChildChanged(newState) }></MangaList>
         </label>
+        <br />
         <label>
         Chapter
         <ChapterList callbackParent={(chapter) => this.changeChapter(chapter)} series={this.state.series}></ChapterList>
