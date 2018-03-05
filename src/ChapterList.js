@@ -42,7 +42,7 @@ class ChapterList extends Component{
       )
     }
     return(
-      <select></select>
+      <select id="chapters"></select>
     )
   }
 

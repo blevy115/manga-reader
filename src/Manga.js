@@ -3,6 +3,7 @@ import './App.css';
 import Chapter from './Chapter.js'
 import MangaList from './MangaList.js'
 import ChapterList from './ChapterList'
+import PageList from './PageList'
 
 
 class Manga extends Component {
@@ -11,16 +12,19 @@ class Manga extends Component {
     this.state = {
       currentChapter:[],
       series:"",
-      chapter:""
+      chapter:"",
+      page:""
     }
     this.changeChapter = this.changeChapter.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 
-
   }
 
   onChildChanged(newState) {
-     this.setState({ series: newState, chapter: 1 })
+     this.setState({ series: newState, chapter:1, page:""}, function(e){
+       let list = document.getElementById('chapters');
+       list.value = this.state.chapter
+     })
    }
 
 
@@ -42,7 +46,15 @@ class Manga extends Component {
         json.pages.forEach(function(page){
           chapter.push(page.url)
         })
-        base.setState ({ currentChapter: chapter})
+        base.setState ({ currentChapter: chapter},function(e){
+          base.setState ({
+            page:1
+          }, function(e){
+            let pageNumber = parseInt(this.state.page)
+            let list = document.getElementById('pages');
+            list.value = pageNumber
+          })
+        })
 
       })
       .catch((ex) => {
@@ -73,7 +85,15 @@ class Manga extends Component {
         json.pages.forEach(function(page){
           chapter.push(page.url)
         })
-        base.setState ({ currentChapter: chapter})
+        base.setState ({ currentChapter: chapter},function(e){
+          base.setState ({
+            page:this.state.currentChapter.length
+          }, function(e){
+            let pageNumber = parseInt(this.state.page)
+            let list = document.getElementById('pages');
+            list.value = pageNumber
+          })
+        })
 
       })
       .catch((ex) => {
@@ -88,14 +108,54 @@ class Manga extends Component {
 
 
   changeChapter(chapter){
-    this.setState({chapter: chapter})
+    this.setState({chapter: chapter}, function(e){
+      var base = this;
+      let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+this.state.chapter;
+      console.log(mangaApi);
+      fetch(mangaApi, {
+        headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
+      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((json) => {
+          let chapter = []
+          json.pages.forEach(function(page){
+            chapter.push(page.url)
+          })
+          base.setState ({ currentChapter: chapter},function(e){
+            base.setState ({
+              page:1
+            }, function(e){
+              let pageNumber = parseInt(this.state.page)
+              let list = document.getElementById('pages');
+              list.value = pageNumber
+            })
+          })
+
+        })
+        .catch((ex) => {
+          window.alert(ex)
+          console.log('There was an error', ex);
+        })
+    })
+  }
+
+  changePage(page){
+    this.setState({page:page}, function(e){
+      // console.log(this.state.page);
+      // console.log(page);
+      let pageNumber = parseInt(this.state.page)
+      let list = document.getElementById('pages');
+      list.value = pageNumber
+    })
   }
 
   handleSubmit(event) {
 
     var base = this;
     let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+this.state.chapter;
-
+    console.log(mangaApi);
     fetch(mangaApi, {
       headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
     })
@@ -107,11 +167,19 @@ class Manga extends Component {
         json.pages.forEach(function(page){
           chapter.push(page.url)
         })
-        base.setState ({ currentChapter: chapter})
+        base.setState ({ currentChapter: chapter},function(e){
+          base.setState ({
+            page:1
+          }, function(e){
+            let pageNumber = parseInt(this.state.page)
+            let list = document.getElementById('pages');
+            list.value = pageNumber
+          })
+        })
 
       })
       .catch((ex) => {
-        window.alert('That chapter is not out yet, choose another')
+        window.alert(ex)
         console.log('There was an error', ex);
       })
     event.preventDefault()
@@ -137,10 +205,15 @@ class Manga extends Component {
         <ChapterList callbackParent={(chapter) => this.changeChapter(chapter)} series={this.state.series}></ChapterList>
         </label>
         <br />
+        <label>
+        Page
+        <PageList page={this.state.page} chapterLength = {this.state.currentChapter.length} sendPage={(page) => this.changePage(page)}></PageList>
+        </label>
+        <br />
         <input type="submit" value="Load Chapter!" />
       </form>
 
-        <Chapter chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} callParentNext={() => this.onNextChapter() } callParentPrev={() => this.onPrevChapter()} ></Chapter>
+        <Chapter chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} page = {this.state.page} callParentNext={() => this.onNextChapter() } callParentPrev={() => this.onPrevChapter()} getPagefromChild={(page) => this.changePage(page)} ></Chapter>
       </div>
     );
   }

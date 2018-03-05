@@ -32,6 +32,10 @@ class Chapter extends Component {
       page:0,
       chapterNumber:props.chapterNumber
     })
+  }  else if (this.state.page!== props.page){
+    this.setState({
+      page:props.page-1
+    })
   }
 
   }
@@ -59,14 +63,17 @@ class Chapter extends Component {
       this.setState({fromPrev:false})
       this.handleClick()
     } else if (event.keyCode===37) {
-      this.setState({ page: this.state.page - 1 })
-      this.prevChapter()
-    } 
+      this.setState({ page: this.state.page - 1 }, function(e){
+        this.prevChapter()
+        this.props.getPagefromChild(this.state.page+1)
+      })
+    }
   }
 
   handleClick(){
     this.setState({ page: this.state.page + 1}, function(){
       this.nextChapter()
+      this.props.getPagefromChild(this.state.page+1)
       this.setState({fromPrev:false});
     })
   }
