@@ -27,7 +27,36 @@ class Manga extends Component {
   onNextChapter(){
     this.setState({chapter: parseInt(this.state.chapter) + 1})
     var base = this;
-    let chapterNumber = parseInt(this.state.chapter) + 1
+    let chapterNumber = parseInt(this.state.chapter)
+    let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+chapterNumber;
+
+    fetch(mangaApi, {
+      headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        let chapter = []
+        json.pages.forEach(function(page){
+          chapter.push(page.url)
+        })
+        base.setState ({ currentChapter: chapter})
+
+      })
+      .catch((ex) => {
+        window.alert('That chapter is not out yet, choose another')
+        console.log('There was an error', ex);
+      })
+
+      let list = document.getElementById('chapters');
+      list.value = chapterNumber
+  }
+
+  onPrevChapter(){
+    this.setState({chapter: parseInt(this.state.chapter) - 1})
+    var base = this;
+    let chapterNumber = parseInt(this.state.chapter)
     let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+chapterNumber;
 
     fetch(mangaApi, {
@@ -106,7 +135,7 @@ class Manga extends Component {
         <input type="submit" value="Load Chapter!" />
       </form>
 
-        <Chapter chapter ={this.state.currentChapter} chapterLength = {this.state.currentChapter.length} callbackParent={() => this.onNextChapter() }></Chapter>
+        <Chapter chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} callParentNext={() => this.onNextChapter() } callParentPrev={() => this.onPrevChapter()} ></Chapter>
       </div>
     );
   }

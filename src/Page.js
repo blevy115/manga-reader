@@ -15,11 +15,18 @@ class Page extends Component {
     })
   }
 
+  componentDidMount(){
+    if (this.props.keys){
+      window.addEventListener('keyup', this.props.keys)
+    }
+  }
+
+
   render(){
     return(
-      <div>
-        <img src={this.state.page} onClick={this.props.imageClick}/>
-      </div>
+      <a id="picture">
+        <img src={this.state.page} onClick={this.props.imageClick} />
+      </a>
     )
   }
 }
