@@ -16,12 +16,16 @@ class Chapter extends Component {
   }
 
   componentWillReceiveProps(props){
+    // console.log(this.state.fromPrev);
     if (this.state.fromPrev===true && this.state.chapter !== props.chapter){
       this.setState({
         chapter:props.chapter,
         page:props.chapterLength - 1,
         chapterNumber:props.chapterNumber
-      })
+      },
+    this.setState({
+      fromPrev:false
+    }))
     }else if  (this.state.fromPrev===false && this.state.chapter !== props.chapter){
     this.setState({
       chapter:props.chapter,
@@ -33,7 +37,11 @@ class Chapter extends Component {
   }
 
   nextChapter(){
+    // console.log('n1');
+    // console.log(parseInt(this.state.page));
+    // console.log(parseInt(this.props.chapterLength));
     if (parseInt(this.state.page) === parseInt(this.props.chapterLength)){
+      // console.log('n2');
       this.props.callParentNext()
     }
   }
@@ -42,6 +50,7 @@ class Chapter extends Component {
     if (this.state.page<0){
       this.setState({fromPrev:true})
       this.props.callParentPrev()
+      // this.setState({fromPrev:false})
     }
   }
 
@@ -52,13 +61,14 @@ class Chapter extends Component {
     } else if (event.keyCode===37) {
       this.setState({ page: this.state.page - 1 })
       this.prevChapter()
-    } else {this.setState({fromPrev:false})}
-
+    } 
   }
 
   handleClick(){
-    this.setState({ page: this.state.page + 1})
-    this.nextChapter()
+    this.setState({ page: this.state.page + 1}, function(){
+      this.nextChapter()
+      this.setState({fromPrev:false});
+    })
   }
   render(){
     if (this.state.chapter){
