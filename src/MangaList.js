@@ -43,6 +43,7 @@ class MangaList extends Component {
     if (this.state.list){
       return (
         <select className="shortened" onChange={this.seriesChange}>
+        <option selected="selected" disabled="disabled">Select a Series</option>
           {this.state.list.map(array => <option value ={array[0]}>{array[1]}</option>)}
         </select>
       )

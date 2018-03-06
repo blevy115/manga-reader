@@ -4,6 +4,7 @@ import Chapter from './Chapter.js'
 import MangaList from './MangaList.js'
 import ChapterList from './ChapterList'
 import PageList from './PageList'
+import GenresList from './GenresList'
 
 
 class Manga extends Component {
@@ -155,7 +156,6 @@ class Manga extends Component {
 
     var base = this;
     let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+this.state.chapter;
-    console.log(mangaApi);
     fetch(mangaApi, {
       headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
     })
@@ -187,6 +187,7 @@ class Manga extends Component {
 
 
   render(){
+    document.title = "Manga Reader"
     return (
       <div className="Manga">
         <header className="Manga-header">
@@ -214,6 +215,7 @@ class Manga extends Component {
       </form>
 
         <Chapter chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} page = {this.state.page} callParentNext={() => this.onNextChapter() } callParentPrev={() => this.onPrevChapter()} getPagefromChild={(page) => this.changePage(page)} ></Chapter>
+        <GenresList />
       </div>
     );
   }
