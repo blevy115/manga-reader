@@ -10,6 +10,7 @@ class Genres extends Component {
   }
 
   componentWillReceiveProps(props){
+    if (props.genre){ //leave for now
     this.setState({
       genre:props.genre
     }, function(e){
@@ -33,6 +34,7 @@ class Genres extends Component {
         console.log('There was an error', ex);
       })
     })
+  }
   }
 
   render(){

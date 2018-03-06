@@ -112,7 +112,6 @@ class Manga extends Component {
     this.setState({chapter: chapter}, function(e){
       var base = this;
       let mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+this.state.chapter;
-      console.log(mangaApi);
       fetch(mangaApi, {
         headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
       })
