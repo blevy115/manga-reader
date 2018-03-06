@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Genres from './Genres'
 
 class GenresList extends Component {
   constructor(props){
@@ -36,19 +35,19 @@ class GenresList extends Component {
   genreSelect(event) {
     this.setState({
       chosenGenre:event.target.value
+    }, function(e){
+      this.props.callbackParent(this.state.chosenGenre)
     })
   }
 
   render(){
     if (this.state.genres){
       return (
-        <div>
         <select className="shortened" onChange={this.genreSelect}>
         <option selected="selected" disabled="disabled">Select a Genre</option>
+        <option value="all">all</option>
         {this.state.genres.map(array => <option value ={array}>{array}</option>)}
         </select>
-        <Genres genre={this.state.chosenGenre}></Genres>
-        </div>
       )
     }
     return (

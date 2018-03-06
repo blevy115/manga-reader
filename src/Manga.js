@@ -14,11 +14,16 @@ class Manga extends Component {
       currentChapter:[],
       series:"",
       chapter:"",
-      page:""
+      page:"",
+      genre:""
     }
     this.changeChapter = this.changeChapter.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 
+  }
+
+  onGenreSelected(newState){
+    this.setState({genre:newState})
   }
 
   onChildChanged(newState) {
@@ -194,10 +199,14 @@ class Manga extends Component {
         </header>
 
         <form onSubmit={this.handleSubmit}>
-
+        <label>
+          Genre List
+          <GenresList callbackParent={(newState) => this.onGenreSelected(newState)}></GenresList>
+        </label>
+        <br />
         <label>
           Manga List
-          <MangaList callbackParent={(newState) => this.onChildChanged(newState) }></MangaList>
+          <MangaList genre={this.state.genre} callbackParent={(newState) => this.onChildChanged(newState) }></MangaList>
         </label>
         <br />
         <label>
@@ -214,7 +223,6 @@ class Manga extends Component {
       </form>
 
         <Chapter chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} page = {this.state.page} callParentNext={() => this.onNextChapter() } callParentPrev={() => this.onPrevChapter()} getPagefromChild={(page) => this.changePage(page)} ></Chapter>
-        <GenresList />
       </div>
     );
   }

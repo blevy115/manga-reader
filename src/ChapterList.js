@@ -10,6 +10,7 @@ class ChapterList extends Component{
   }
 
   componentWillReceiveProps(props){
+    if(props.series){
     var base = this
     fetch('https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+props.series, {
       headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
@@ -26,6 +27,7 @@ class ChapterList extends Component{
       .catch((ex) => {
         console.log('There was an error', ex);
       })
+    }
   }
 
   chapterChoice(event){
