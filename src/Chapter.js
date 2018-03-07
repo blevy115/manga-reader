@@ -79,8 +79,8 @@ class Chapter extends Component {
   }
   render(){
     if (this.state.chapter){
-      return <Page url={this.state.chapter[this.state.page]} imageClick = {this.handleClick} keys={this.keyPresses}></Page>
-    }
+      return( <Page url={this.state.chapter[this.state.page]} imageClick = {this.handleClick} keys={this.keyPresses}></Page>
+    )}
   return (
     <div>
     <Page></Page>

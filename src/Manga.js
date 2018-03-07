@@ -15,7 +15,8 @@ class Manga extends Component {
       series:"",
       chapter:"",
       page:"",
-      genre:""
+      genre:"",
+      name:""
     }
     this.changeChapter = this.changeChapter.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -23,11 +24,11 @@ class Manga extends Component {
   }
 
   onGenreSelected(newState){
-    this.setState({genre:newState})
+    this.setState({genre:newState, name:""})
   }
 
   onChildChanged(newState) {
-     this.setState({ series: newState, chapter:1, page:""}, function(e){
+     this.setState({ series: newState, chapter:1, page:"", name:""}, function(e){
        let list = document.getElementById('chapters');
        list.value = this.state.chapter
      })
@@ -49,10 +50,16 @@ class Manga extends Component {
       })
       .then((json) => {
         let chapter = []
+        let name = ""
+        if (json.name){
+          let name = 'Title: '+json.name
+        } else {
+          let name = 'No Title Provided'
+        }
         json.pages.forEach(function(page){
           chapter.push(page.url)
         })
-        base.setState ({ currentChapter: chapter},function(e){
+        base.setState ({ currentChapter: chapter, name: name},function(e){
           base.setState ({
             page:1
           }, function(e){
@@ -88,10 +95,16 @@ class Manga extends Component {
       })
       .then((json) => {
         let chapter = []
+        let name = ""
+        if (json.name){
+          let name = 'Title: '+json.name
+        } else {
+          let name = 'No Title Provided'
+        }
         json.pages.forEach(function(page){
           chapter.push(page.url)
         })
-        base.setState ({ currentChapter: chapter},function(e){
+        base.setState ({ currentChapter: chapter, name: name},function(e){
           base.setState ({
             page:this.state.currentChapter.length
           }, function(e){
@@ -125,10 +138,16 @@ class Manga extends Component {
         })
         .then((json) => {
           let chapter = []
+          let name = ""
+          if (json.name){
+            let name = 'Title: '+json.name
+          } else {
+            let name = 'No Title Provided'
+          }
           json.pages.forEach(function(page){
             chapter.push(page.url)
           })
-          base.setState ({ currentChapter: chapter},function(e){
+          base.setState ({ currentChapter: chapter, name:name},function(e){
             base.setState ({
               page:1
             }, function(e){
@@ -168,10 +187,16 @@ class Manga extends Component {
       })
       .then((json) => {
         let chapter = []
+        let name = ""
+        if (json.name){
+           name = 'Title: '+json.name
+        } else {
+           name = 'No Title Provided'
+        }
         json.pages.forEach(function(page){
           chapter.push(page.url)
         })
-        base.setState ({ currentChapter: chapter},function(e){
+        base.setState ({ currentChapter: chapter, name: name},function(e){
           base.setState ({
             page:1
           }, function(e){
@@ -213,6 +238,7 @@ class Manga extends Component {
         Chapter
         <ChapterList callbackParent={(chapter) => this.changeChapter(chapter)} series={this.state.series}></ChapterList>
         </label>
+        <span id='title'>{this.state.name}</span>
         <br />
         <label>
         Page
@@ -222,7 +248,7 @@ class Manga extends Component {
         <input type="submit" value="Load Chapter!" />
       </form>
 
-        <Chapter chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} page = {this.state.page} callParentNext={() => this.onNextChapter() } callParentPrev={() => this.onPrevChapter()} getPagefromChild={(page) => this.changePage(page)} ></Chapter>
+        <Chapter name={this.state.name} chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} page = {this.state.page} callParentNext={() => this.onNextChapter() } callParentPrev={() => this.onPrevChapter()} getPagefromChild={(page) => this.changePage(page)} ></Chapter>
       </div>
     );
   }
