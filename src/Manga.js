@@ -50,12 +50,14 @@ class Manga extends Component {
       })
       .then((json) => {
         let chapter = []
+        console.log(json.name);
         let name = ""
         if (json.name){
-          let name = 'Title: '+json.name
+           name = 'Title: '+json.name
         } else {
-          let name = 'No Title Provided'
+           name = 'No Title Provided'
         }
+        console.log(name);
         json.pages.forEach(function(page){
           chapter.push(page.url)
         })
@@ -97,9 +99,9 @@ class Manga extends Component {
         let chapter = []
         let name = ""
         if (json.name){
-          let name = 'Title: '+json.name
+           name = 'Title: '+json.name
         } else {
-          let name = 'No Title Provided'
+           name = 'No Title Provided'
         }
         json.pages.forEach(function(page){
           chapter.push(page.url)
@@ -140,9 +142,9 @@ class Manga extends Component {
           let chapter = []
           let name = ""
           if (json.name){
-            let name = 'Title: '+json.name
+             name = 'Title: '+json.name
           } else {
-            let name = 'No Title Provided'
+             name = 'No Title Provided'
           }
           json.pages.forEach(function(page){
             chapter.push(page.url)
