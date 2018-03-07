@@ -5,7 +5,8 @@ class PageList extends Component{
     super(props)
     this.state = {
       page:"",
-      chapterLength:""
+      chapterLength:"",
+      disable:""
     }
     this.pageChoice=this.pageChoice.bind(this)
   }
@@ -13,7 +14,8 @@ class PageList extends Component{
   componentWillReceiveProps(props){
     this.setState({
       page:props.page,
-      chapterLength:props.chapterLength
+      chapterLength:props.chapterLength,
+      disable:props.disable
     })
   }
 
@@ -23,7 +25,7 @@ class PageList extends Component{
   }
 
   render(){
-    if (this.props.page){
+    if (this.props.page && this.state.disable===false){
       return(
         <select id="pages" onChange={this.pageChoice} >
         {Array.from({length: this.state.chapterLength}, (v, k) => k+1).map(number => <option value ={parseInt(number)}>{number}</option>)}

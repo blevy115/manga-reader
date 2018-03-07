@@ -8,7 +8,8 @@ class Chapter extends Component {
       chapter:"",
       page:"",
       chapterNumber:"",
-      fromPrev:false
+      fromPrev:false,
+      disable:""
     }
     this.handleClick= this.handleClick.bind(this)
     this.nextChapter = this.nextChapter.bind(this)
@@ -21,7 +22,8 @@ class Chapter extends Component {
       this.setState({
         chapter:props.chapter,
         page:props.chapterLength - 1,
-        chapterNumber:props.chapterNumber
+        chapterNumber:props.chapterNumber,
+        disable:props.disable
       },
     this.setState({
       fromPrev:false
@@ -30,11 +32,13 @@ class Chapter extends Component {
     this.setState({
       chapter:props.chapter,
       page:0,
-      chapterNumber:props.chapterNumber
+      chapterNumber:props.chapterNumber,
+      disable:props.disable
     })
   }  else if (this.state.page!== props.page){
     this.setState({
-      page:props.page-1
+      page:props.page-1,
+      disable:props.disable
     })
   }
 
@@ -59,6 +63,7 @@ class Chapter extends Component {
   }
 
   keyPresses(event){
+    if (this.state.disable===false){
     if(event.keyCode===39){
       this.setState({fromPrev:false})
       this.handleClick()
@@ -69,13 +74,17 @@ class Chapter extends Component {
       })
     }
   }
+  }
 
   handleClick(){
+    if (this.state.disable===false){
+
     this.setState({ page: this.state.page + 1}, function(){
       this.nextChapter()
       this.props.getPagefromChild(this.state.page+1)
       this.setState({fromPrev:false});
     })
+  }
   }
   render(){
     if (this.state.chapter){
