@@ -17,7 +17,8 @@ class Manga extends Component {
       page:"",
       genre:"",
       name:"",
-      pageListDisable:false
+      pageListDisable:false,
+      chapterListDisable:false
     }
     this.changeChapter = this.changeChapter.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -25,11 +26,13 @@ class Manga extends Component {
   }
 
   onGenreSelected(newState){
-    this.setState({genre:newState})
+    this.setState({genre:newState, series:"", pageListDisable:true, chapterListDisable:true, name:"" })
+    let list = document.getElementById('genres')
+    list.value = newState
   }
 
   onChildChanged(newState) {
-     this.setState({ series: newState, pageListDisable:true}, function(e){
+     this.setState({ series: newState, pageListDisable:true, chapterListDisable:false, name:""}, function(e){
        let list = document.getElementById('chapters');
        list.value = 1
      })
@@ -242,10 +245,7 @@ class Manga extends Component {
           <MangaList genre={this.state.genre} callbackParent={(newState) => this.onChildChanged(newState) }></MangaList>
         </label>
         <br />
-        <label>
-        Chapter
-        <ChapterList callbackParent={(chapter) => this.changeChapter(chapter)} series={this.state.series}></ChapterList>
-        </label>
+        <ChapterList disable={this.state.chapterListDisable}  callbackParent={(chapter) => this.changeChapter(chapter)} chooseGenre={(genre) => this.onGenreSelected(genre)} series={this.state.series}></ChapterList>
         <span id='title'>{this.state.name}</span>
         <br />
         <label>

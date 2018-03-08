@@ -43,7 +43,7 @@ class GenresList extends Component {
   render(){
     if (this.state.genres){
       return (
-        <select className="shortened" onChange={this.genreSelect}>
+        <select className="shortened" id='genres'onChange={this.genreSelect}>
         <option selected="selected" disabled="disabled">Select a Genre</option>
         <option value="all">all</option>
         {this.state.genres.map(array => <option value ={array}>{array}</option>)}
@@ -51,7 +51,7 @@ class GenresList extends Component {
       )
     }
     return (
-      <div>
+      <div id='genres'>
         Getting Genres ...
       </div>
     )

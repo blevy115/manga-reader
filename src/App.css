@@ -42,3 +42,7 @@ body {
     .shortened {
       max-width: 500px
     }
+    .series-genre {
+      display: inline-block;
+      margin-right: 10px
+    }
