@@ -9,11 +9,13 @@ class Chapter extends Component {
       page:"",
       chapterNumber:"",
       fromPrev:false,
-      disable:""
+      disable:"",
+      majorDimension:""
     }
     this.handleClick= this.handleClick.bind(this)
     this.nextChapter = this.nextChapter.bind(this)
     this.keyPresses=this.keyPresses.bind(this)
+    this.majorDimension=this.majorDimension.bind(this)
   }
 
   componentWillReceiveProps(props){
@@ -86,9 +88,20 @@ class Chapter extends Component {
     })
   }
   }
+
+  majorDimension(){
+    let picture = document.getElementById('theImage')
+    let height = picture.height;
+    let width = picture.width;
+    if (width>height){
+      this.setState({majorDimension:'width'})
+    } else if (height>width){
+      this.setState({majorDimension:'height'})
+    }
+  }
   render(){
     if (this.state.chapter){
-      return( <Page url={this.state.chapter[this.state.page]} imageClick = {this.handleClick} keys={this.keyPresses}></Page>
+      return( <Page majorDimension = {()=> this.majorDimension()} dimension = {this.state.majorDimension} url={this.state.chapter[this.state.page]} imageClick = {this.handleClick} keys={this.keyPresses}></Page>
     )}
   return (
     <div>

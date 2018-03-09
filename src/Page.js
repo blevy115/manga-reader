@@ -5,15 +5,25 @@ class Page extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      page:""
+      page:"",
+      majorDimension:""
     }
   }
 
   componentWillReceiveProps(props){
-    this.setState({
-      page:props.url
-    })
+      this.setState({
+        page:props.url
+      })
+      if (props.dimension){
+        this.setState({majorDimension:props.dimension})
+      }
   }
+
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.page!==prevState.page){
+      this.props.majorDimension
+      }
+    }
 
   componentDidMount(){
     if (this.props.keys){
@@ -21,11 +31,10 @@ class Page extends Component {
     }
   }
 
-
   render(){
     return(
-      <div id="picture" >
-        <img id="theImage"  src={this.state.page} onClick={this.props.imageClick} />
+      <div id="picture">
+        <img id="theImage" class={this.state.majorDimension} src={this.state.page} onClick={this.props.imageClick} onLoad={this.props.majorDimension} />
       </div>
     )
   }
