@@ -6,6 +6,7 @@ class ChapterList extends Component{
     this.state = {
       lastChapter:"",
       genres:"",
+      info:"",
       disable:""
     }
     this.chapterChoice=this.chapterChoice.bind(this)
@@ -23,10 +24,12 @@ class ChapterList extends Component{
       })
       .then((json) => {
         const genres = json.genres
+        const info = json.info
         const latestChapter = json.chapters[json.chapters.length-1].chapterId
         base.setState({
           lastChapter:latestChapter,
           genres:genres,
+          info:info,
           disable:props.disable
         })
       })
@@ -53,7 +56,9 @@ class ChapterList extends Component{
     if (this.state.lastChapter && this.state.genres && this.state.disable===false){
       return (
         <span>
+        <p>Description: {this.state.info}</p>
         <ul>
+        <span>Genres : </span>
         {this.state.genres.map(genre => <li className = 'series-genre' onClick ={() => {this.genreChoice({genre})} } >{genre}</li>)}
         </ul>
         <label>
