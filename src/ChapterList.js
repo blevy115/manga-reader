@@ -14,7 +14,6 @@ class ChapterList extends Component{
   }
 
   componentWillReceiveProps(props){
-    // console.log(props.series);
     if(props.series && props.disable===false){
     var base = this
     fetch('https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+props.series, {

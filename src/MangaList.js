@@ -9,6 +9,7 @@ class MangaList extends Component {
       genre:""
     }
     this.seriesChange = this.seriesChange.bind(this)
+    this.randomSeries = this.randomSeries.bind(this)
 
   }
 
@@ -85,15 +86,30 @@ class MangaList extends Component {
   }
 
 
-
+  randomSeries(event){
+    event.preventDefault()
+    let list = document.getElementById('mangas')
+    var randomNumber = Math.floor(Math.random()*list.length)
+    while (randomNumber === 0){
+      randomNumber = Math.floor(Math.random()*list.length)
+    }
+    let random = list[randomNumber].value
+    this.setState({ series: random}); // we update our state
+    this.props.callbackParent(random);
+    list.value = random
+  }
 
   render(){
     if (this.state.list){
       return (
+        <span>
         <select className="shortened" id="mangas" onChange={this.seriesChange}>
         <option selected="selected" disabled="disabled" value="nil">Select a Series</option>
           {this.state.list.map(array => <option value ={array[0]}>{array[1]}</option>)}
         </select>
+        <br/>
+        <input type="submit" value="Random" onClick={this.randomSeries} />
+        </span>
       )
     }
     return (
