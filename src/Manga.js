@@ -262,6 +262,8 @@ class Manga extends Component {
         </label>
         <br />
         <input type="submit" value="Load Chapter!" />
+        <input type="submit" value="Prev Chapter" onClick={this.onPrevChapter.bind(this)}/>
+        <input type="submit" value="Next Chapter" onClick={this.onNextChapter.bind(this)}/>
       </form>
 
         <Chapter disable = {this.state.pageListDisable} name={this.state.name} chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} page = {this.state.page} callParentNext={(chapter) => this.onNextChapter(chapter) } callParentPrev={(chapter) => this.onPrevChapter(chapter)} getPagefromChild={(page) => this.changePage(page)} ></Chapter>

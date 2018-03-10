@@ -16,7 +16,7 @@ class Search extends Component{
     this.setState({input:search})
     var base = this;
     const searchList = []
-    let mangaApi="https://doodle-manga-scraper.p.mashape.com/mangareader.net/search?cover=0&info=0&l=100&q="+search
+    let mangaApi="https://doodle-manga-scraper.p.mashape.com/mangareader.net/search?cover=0&info=0&l=10000&q="+search
     event.preventDefault()
   fetch(mangaApi, {
     headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
