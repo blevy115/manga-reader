@@ -5,6 +5,7 @@ import MangaList from './MangaList.js'
 import ChapterList from './ChapterList'
 import PageList from './PageList'
 import GenresList from './GenresList'
+import Search from './Search.js'
 
 
 class Manga extends Component {
@@ -18,7 +19,8 @@ class Manga extends Component {
       genre:"",
       name:"",
       pageListDisable:false,
-      chapterListDisable:false
+      chapterListDisable:false,
+      searchList:""
     }
     this.changeChapter = this.changeChapter.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -26,7 +28,9 @@ class Manga extends Component {
   }
 
   onGenreSelected(newState){
-    this.setState({genre:newState, series:"", pageListDisable:true, chapterListDisable:true, name:"" })
+    const search =document.getElementById('search')
+    search.value=""
+    this.setState({genre:newState, series:"", pageListDisable:true, chapterListDisable:true, name:"" , searchList:""})
     let list = document.getElementById('genres')
     list.value = newState
   }
@@ -179,6 +183,10 @@ class Manga extends Component {
     })
   }
 
+  searchResults(list){
+    this.setState({genre:"", series:"", pageListDisable:true, chapterListDisable:true, name:"" , searchList:list})
+  }
+
   handleSubmit(event) {
     var base = this;
     let mangaApi =""
@@ -233,7 +241,7 @@ class Manga extends Component {
         <header className="Manga-header">
           <h1 className="Manga-title">Welcome to BMR </h1>
         </header>
-
+        <Search getSearch={(list)=> this.searchResults(list)}  />
         <form onSubmit={this.handleSubmit}>
         <label>
           Genre List
@@ -242,7 +250,7 @@ class Manga extends Component {
         <br />
         <label>
           Manga List
-          <MangaList genre={this.state.genre} callbackParent={(newState) => this.onChildChanged(newState) }></MangaList>
+          <MangaList genre={this.state.genre} callbackParent={(newState) => this.onChildChanged(newState) }  searchList={this.state.searchList}></MangaList>
         </label>
         <br />
         <ChapterList disable={this.state.chapterListDisable}  callbackParent={(chapter) => this.changeChapter(chapter)} chooseGenre={(genre) => this.onGenreSelected(genre)} series={this.state.series}></ChapterList>
