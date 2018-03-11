@@ -59,7 +59,7 @@ class Chapter extends Component {
   prevChapter(){
     if (this.state.page<0){
       this.setState({fromPrev:true})
-      this.props.callParentPrev()
+      this.props.callParentPrev(true)
       // this.setState({fromPrev:false})
     }
   }

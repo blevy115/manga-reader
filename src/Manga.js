@@ -20,10 +20,12 @@ class Manga extends Component {
       name:"",
       pageListDisable:false,
       chapterListDisable:false,
-      searchList:""
+      searchList:"",
+      infoToggle:"Hide Info"
     }
     this.changeChapter = this.changeChapter.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.infoToggle = this.infoToggle.bind(this)
 
   }
 
@@ -36,7 +38,7 @@ class Manga extends Component {
   }
 
   onChildChanged(newState) {
-     this.setState({ series: newState, pageListDisable:true, chapterListDisable:false, name:""}, function(e){
+     this.setState({ series: newState, pageListDisable:true, chapterListDisable:false, name:"", chapter:1}, function(e){
        let list = document.getElementById('chapters');
        list.value = 1
      })
@@ -82,13 +84,12 @@ class Manga extends Component {
         window.alert('That chapter is not out yet, choose another')
         console.log('There was an error', ex);
       })
-
       let list = document.getElementById('chapters');
       list.value = chapterNumber
       })
   }
 
-  onPrevChapter(){
+  onPrevChapter(bool){
     this.setState({chapter: parseInt(this.state.chapter) - 1, pageListDisable:false}, function(e){
 
     var base = this;
@@ -113,6 +114,7 @@ class Manga extends Component {
           chapter.push(page.url)
         })
         base.setState ({ currentChapter: chapter, name: name},function(e){
+          if (bool===true){
           base.setState ({
             page:this.state.currentChapter.length
           }, function(e){
@@ -120,17 +122,24 @@ class Manga extends Component {
             let list = document.getElementById('pages');
             list.value = pageNumber
           })
-        })
-
+        }else{
+          base.setState ({
+            page:1
+          }, function(e){
+            let pageNumber = parseInt(this.state.page)
+            let list = document.getElementById('pages');
+            list.value = pageNumber
+          })
+        }
       })
+    })
       .catch((ex) => {
         window.alert('That chapter is not out yet, choose another')
         console.log('There was an error', ex);
       })
-
       let list = document.getElementById('chapters');
       list.value = chapterNumber
-      })
+    })
   }
 
 
@@ -167,7 +176,7 @@ class Manga extends Component {
 
         })
         .catch((ex) => {
-          window.alert(ex)
+          window.alert('change chapter issue')
           console.log('There was an error', ex);
         })
     })
@@ -227,10 +236,19 @@ class Manga extends Component {
 
       })
       .catch((ex) => {
-        window.alert(ex)
+        window.alert('handle submit issue')
         console.log('There was an error', ex);
       })
     event.preventDefault()
+  }
+
+  infoToggle(event){
+    event.preventDefault()
+    if (this.state.infoToggle==="Show Info"){
+      this.setState({infoToggle:"Hide Info"})
+    } else if (this.state.infoToggle==="Hide Info"){
+      this.setState({infoToggle:"Show Info"})
+    }
   }
 
 
@@ -252,8 +270,9 @@ class Manga extends Component {
           Manga List
           <MangaList genre={this.state.genre} callbackParent={(newState) => this.onChildChanged(newState) }  searchList={this.state.searchList}></MangaList>
         </label>
+        <input type="submit" value ={this.state.infoToggle} onClick={this.infoToggle}/>
         <br />
-        <ChapterList disable={this.state.chapterListDisable}  callbackParent={(chapter) => this.changeChapter(chapter)} chooseGenre={(genre) => this.onGenreSelected(genre)} series={this.state.series}></ChapterList>
+        <ChapterList disable={this.state.chapterListDisable}  callbackParent={(chapter) => this.changeChapter(chapter)} chooseGenre={(genre) => this.onGenreSelected(genre)} series={this.state.series} infoToggle={this.state.infoToggle} chapter ={this.state.chapter}></ChapterList>
         <span id='title'>{this.state.name}</span>
         <br />
         <label>
@@ -265,7 +284,6 @@ class Manga extends Component {
         <input type="submit" value="Prev Chapter" onClick={this.onPrevChapter.bind(this)}/>
         <input type="submit" value="Next Chapter" onClick={this.onNextChapter.bind(this)}/>
       </form>
-
         <Chapter disable = {this.state.pageListDisable} name={this.state.name} chapter ={this.state.currentChapter} chapterNumber = {this.state.chapter} chapterLength = {this.state.currentChapter.length} page = {this.state.page} callParentNext={(chapter) => this.onNextChapter(chapter) } callParentPrev={(chapter) => this.onPrevChapter(chapter)} getPagefromChild={(page) => this.changePage(page)} ></Chapter>
       </div>
     );

@@ -7,7 +7,8 @@ class ChapterList extends Component{
       lastChapter:"",
       genres:"",
       info:"",
-      disable:""
+      disable:"",
+      currentChapter:""
     }
     this.chapterChoice=this.chapterChoice.bind(this)
     this.genreChoice=this.genreChoice.bind(this)
@@ -39,10 +40,14 @@ class ChapterList extends Component{
     } else {
       this.setState({disable:props.disable})
     }
+    this.setState({currentChapter:props.chapter}, function(e){
+      let list = document.getElementById('chapters');
+      list.value = props.chapter
+    })
   }
 
   chapterChoice(event){
-    const chapter = event.target.value
+    const chapter = parseInt(event.target.value)
     this.props.callbackParent(chapter)
   }
 
@@ -53,7 +58,19 @@ class ChapterList extends Component{
 
 
   render(){
-    if (this.state.lastChapter && this.state.genres && this.state.disable===false){
+    if (this.props.infoToggle==="Show Info" && this.state.disable===false){
+      return (
+        <span>
+        <label>
+        Chapters
+        <select id="chapters" onChange={this.chapterChoice}>
+          {Array.from({length: this.state.lastChapter}, (v, k) => k+1).map(number => <option value ={parseInt(number)}>{number}</option>)}
+        </select>
+        </label>
+        </span>
+      )
+    }
+    else if (this.state.lastChapter && this.state.genres && this.state.disable===false){
       return (
         <span>
         <p>Description: {this.state.info}</p>
