@@ -12,6 +12,7 @@ class Manga extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      docTitle:"Brandon's Manga Speed Reader",
       currentChapter:[],
       series:"",
       chapter:"",
@@ -176,7 +177,7 @@ class Manga extends Component {
 
         })
         .catch((ex) => {
-          window.alert('change chapter issue')
+          window.alert('There was an issue loading that Chapter, try another.')
           console.log('There was an error', ex);
         })
     })
@@ -236,7 +237,7 @@ class Manga extends Component {
 
       })
       .catch((ex) => {
-        window.alert('handle submit issue')
+        window.alert('There was an issue loading that Chapter, try another.')
         console.log('There was an error', ex);
       })
     event.preventDefault()
@@ -253,11 +254,11 @@ class Manga extends Component {
 
 
   render(){
-    document.title = "Manga Reader"
+    document.title = this.state.docTitle
     return (
       <div className="Manga">
         <header className="Manga-header">
-          <h1 className="Manga-title">Welcome to BMR </h1>
+          <h1 className="Manga-title">{this.state.docTitle}</h1>
         </header>
         <Search getSearch={(list)=> this.searchResults(list)}  />
         <form onSubmit={this.handleSubmit}>
