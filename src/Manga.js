@@ -254,7 +254,6 @@ class Manga extends Component {
 
 
   render(){
-    console.log(process);
     document.title = this.state.docTitle
     return (
       <div className="Manga">
