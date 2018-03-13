@@ -47,7 +47,7 @@ class MangaList extends Component {
       this.setState({
         list:props.searchList,
         genre:props.genre,
-        firstOption:"Select from Search Results"
+        firstOption:"Select a Series from Search Results"
       })
     }else if (props.genre!=='all'&& props.genre!==this.state.genre){ //leave for now
     this.setState({
@@ -67,7 +67,7 @@ class MangaList extends Component {
         })
         base.setState({
           list:mangaByGenre,
-          firstOption:"Select From Chosen Genre"
+          firstOption:"Select a Series from '"+base.state.genre+"'"
         })
       })
       .catch((ex) => {
