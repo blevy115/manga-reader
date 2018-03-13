@@ -39,7 +39,11 @@ class MangaList extends Component {
 
   componentWillReceiveProps(props){
     if (props.searchList==="all"){
-      this.componentDidMount()
+      this.setState({
+        firstOption:"Loading..."
+      }, function(e){
+        this.componentDidMount()
+      })
       let search = document.getElementById('search')
       search.value=""
     }
