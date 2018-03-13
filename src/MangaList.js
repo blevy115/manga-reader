@@ -6,7 +6,8 @@ class MangaList extends Component {
     this.state = {
       series:"",
       list:"",
-      genre:""
+      genre:"",
+      firstOption:""
     }
     this.seriesChange = this.seriesChange.bind(this)
     this.randomSeries = this.randomSeries.bind(this)
@@ -27,7 +28,8 @@ class MangaList extends Component {
           seriesList.push([series.mangaId,series.name])
         })
         base.setState({
-          list:seriesList
+          list:seriesList,
+          firstOption:"Select a Series"
         })
       })
       .catch((ex) => {
@@ -44,7 +46,8 @@ class MangaList extends Component {
     else if (props.searchList && props.searchList!== this.state.list){
       this.setState({
         list:props.searchList,
-        genre:props.genre
+        genre:props.genre,
+        firstOption:"Select from Search Results"
       })
     }else if (props.genre!=='all'&& props.genre!==this.state.genre){ //leave for now
     this.setState({
@@ -63,7 +66,8 @@ class MangaList extends Component {
           mangaByGenre.push([series.mangaId,series.name])
         })
         base.setState({
-          list:mangaByGenre
+          list:mangaByGenre,
+          firstOption:"Select From Chosen Genre"
         })
       })
       .catch((ex) => {
@@ -109,7 +113,7 @@ class MangaList extends Component {
       return (
         <span>
         <select className="shortened" id="mangas" onChange={this.seriesChange}>
-        <option selected="selected" disabled="disabled" value="nil">Select a Series</option>
+        <option selected="selected" disabled="disabled" value="nil">{this.state.firstOption}</option>
           {this.state.list.map(array => <option value ={array[0]}>{array[1]}</option>)}
         </select>
         <br/>
