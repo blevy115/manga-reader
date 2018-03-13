@@ -15,7 +15,7 @@ class Search extends Component{
     const search =document.getElementById('search').value
     this.setState({input:search})
     var base = this;
-    const searchList = []
+    let searchList = []
     let mangaApi="https://doodle-manga-scraper.p.mashape.com/mangareader.net/search?cover=0&info=0&l=10000&q="+search
     event.preventDefault()
   fetch(mangaApi, {
@@ -25,10 +25,14 @@ class Search extends Component{
       return response.json()
     })
     .then((json) => {
-
+        if (json.length>0){
         json.forEach(function(series){
           searchList.push([series.mangaId,series.name])
         })
+      } else {
+        window.alert('No search results found!  Try another search.')
+        searchList="all"
+      }
         base.setState({
           list:searchList
         },

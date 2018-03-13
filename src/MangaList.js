@@ -36,7 +36,12 @@ class MangaList extends Component {
   }
 
   componentWillReceiveProps(props){
-    if (props.searchList && props.searchList!== this.state.list){
+    if (props.searchList==="all"){
+      this.componentDidMount()
+      let search = document.getElementById('search')
+      search.value=""
+    }
+    else if (props.searchList && props.searchList!== this.state.list){
       this.setState({
         list:props.searchList,
         genre:props.genre
