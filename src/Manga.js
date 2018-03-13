@@ -281,7 +281,7 @@ class Manga extends Component {
         <PageList disable = {this.state.pageListDisable} page={this.state.page} chapterLength = {this.state.currentChapter.length} sendPage={(page) => this.changePage(page)}></PageList>
         </label>
         <br />
-        <input type="submit" value="Load Chapter!" />
+        <input type="submit" value="Load Chapter" />
         <input type="submit" value="Prev Chapter" onClick={this.onPrevChapter.bind(this)}/>
         <input type="submit" value="Next Chapter" onClick={this.onNextChapter.bind(this)}/>
       </form>

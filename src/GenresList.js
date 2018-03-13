@@ -51,9 +51,9 @@ class GenresList extends Component {
       )
     }
     return (
-      <div id='genres'>
-        Getting Genres ...
-      </div>
+      <select className="shortened" id='genres'>
+      <option selected="selected" disabled="disabled" value="nil">Loading ...</option>
+      </select>
     )
   }
 }

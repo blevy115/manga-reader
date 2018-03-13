@@ -51,7 +51,8 @@ class MangaList extends Component {
       })
     }else if (props.genre!=='all'&& props.genre!==this.state.genre){ //leave for now
     this.setState({
-      genre:props.genre
+      genre:props.genre,
+      firstOption:"Loading..."
     }, function(e){
       var base = this
       const mangaByGenre = []
@@ -67,7 +68,7 @@ class MangaList extends Component {
         })
         base.setState({
           list:mangaByGenre,
-          firstOption:"Select a Series from '"+base.state.genre+"'"
+          firstOption:"Select a Series from '"+props.genre+"'"
         })
       })
       .catch((ex) => {
@@ -76,9 +77,10 @@ class MangaList extends Component {
     })
     let list = document.getElementById('mangas');
     list.value = "nil"
-  } else if (props.genre==="all" && props.genre!==this.state.genre){
+    }else if (props.genre==="all" && props.genre!==this.state.genre){
     this.setState({
-      genre:props.genre
+      genre:props.genre,
+      firstOption:"Loading..."
     }, function(e){
       this.componentDidMount()
     })
@@ -122,9 +124,13 @@ class MangaList extends Component {
       )
     }
     return (
-      <div id="mangas">
-        Loading ...
-      </div>
+      <span>
+      <select className="shortened" id="mangas">
+      <option selected="selected" disabled="disabled" value="nil">Loading ...</option>
+      </select>
+      <br/>
+      <input type="submit" value="Random" onClick={this.randomSeries} />
+      </span>
     )
   }
 }
