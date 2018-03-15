@@ -11,19 +11,23 @@ class Page extends Component {
   }
 
   componentWillReceiveProps(props){
-      this.setState({
-        page:props.url
-      })
-      if (props.dimension){
-        this.setState({majorDimension:props.dimension})
-      }
+    this.setState({
+      page:props.url
+    })
+    let pageHeight = document.getElementById('theImage');
+    pageHeight.scrollIntoView()
+    if (props.dimension){
+      this.setState({majorDimension:props.dimension})
+    }
   }
 
   componentDidUpdate(prevProps, prevState){
     if (this.state.page!==prevState.page){
       this.props.majorDimension
-      }
+      let pageHeight = document.getElementById('theImage');
+      pageHeight.scrollIntoView()
     }
+  }
 
   componentDidMount(){
     if (this.props.keys){
