@@ -16,6 +16,7 @@ class Chapter extends Component {
     this.nextChapter = this.nextChapter.bind(this)
     this.keyPresses=this.keyPresses.bind(this)
     this.majorDimension=this.majorDimension.bind(this)
+    this.buttonClick=this.buttonClick.bind(this)
   }
 
   componentWillReceiveProps(props){
@@ -78,6 +79,20 @@ class Chapter extends Component {
   }
   }
 
+  buttonClick = (e) => {
+    let choice = e.target.value
+    if (choice==="Prev Chapter"){
+      this.props.callParentPrev(false)
+    } else if (choice=="Next Chapter") {
+      this.props.callParentNext()
+    } else if (choice ==="Last Chapter"){
+      let chapters = document.getElementById('chapters')
+      this.props.chooseChapter(chapters.options[chapters.options.length-1].value)
+    }
+    e.preventDefault()
+  }
+
+
   handleClick(){
     if (this.state.disable===false){
 
@@ -100,8 +115,15 @@ class Chapter extends Component {
     }
   }
   render(){
-    if (this.state.chapter){
-      return( <Page majorDimension = {()=> this.majorDimension()} dimension = {this.state.majorDimension} url={this.state.chapter[this.state.page]} imageClick = {this.handleClick} keys={this.keyPresses}></Page>
+    if (this.props.chapterNumber){
+      return(
+        <div>
+        <input type="submit" value="Load Chapter" />
+        <input type="submit" value="Prev Chapter" onClick={this.buttonClick}/>
+        <input type="submit" value="Next Chapter" onClick={this.buttonClick}/>
+        <input type="submit" value="Last Chapter" onClick={this.buttonClick}/>
+        <Page majorDimension = {()=> this.majorDimension()} dimension = {this.state.majorDimension} url={this.state.chapter[this.state.page]} imageClick = {this.handleClick} keys={this.keyPresses}></Page>
+        </div>
     )}
   return (
     <div>

@@ -14,17 +14,19 @@ class Page extends Component {
     this.setState({
       page:props.url
     })
-    let pageHeight = document.getElementById('theImage');
-    pageHeight.scrollIntoView()
     if (props.dimension){
       this.setState({majorDimension:props.dimension})
+    }
+    if (props.url!==this.state.page){
+      let pageHeight = document.getElementById('pages');
+      pageHeight.scrollIntoView()
     }
   }
 
   componentDidUpdate(prevProps, prevState){
     if (this.state.page!==prevState.page){
       this.props.majorDimension
-      let pageHeight = document.getElementById('theImage');
+      let pageHeight = document.getElementById('pages');
       pageHeight.scrollIntoView()
     }
   }
