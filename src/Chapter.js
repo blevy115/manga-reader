@@ -83,7 +83,7 @@ class Chapter extends Component {
     let choice = e.target.value
     if (choice==="Prev Chapter"){
       this.props.callParentPrev(false)
-    } else if (choice=="Next Chapter") {
+    } else if (choice==="Next Chapter") {
       this.props.callParentNext()
     } else if (choice ==="Last Chapter"){
       let chapters = document.getElementById('chapters')

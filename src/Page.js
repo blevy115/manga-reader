@@ -25,7 +25,7 @@ class Page extends Component {
 
   componentDidUpdate(prevProps, prevState){
     if (this.state.page!==prevState.page){
-      this.props.majorDimension
+      this.props.majorDimension()
       let pageHeight = document.getElementById('pages');
       pageHeight.scrollIntoView()
     }
@@ -40,7 +40,7 @@ class Page extends Component {
   render(){
     return(
       <div id="picture">
-        <img id="theImage" class={this.state.majorDimension} src={this.state.page} onClick={this.props.imageClick} onLoad={this.props.majorDimension} />
+        <img id="theImage" class={this.state.majorDimension} src={this.state.page} alt={this.state.page} onClick={this.props.imageClick} onLoad={this.props.majorDimension} />
       </div>
     )
   }

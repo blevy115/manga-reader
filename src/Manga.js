@@ -206,7 +206,7 @@ class Manga extends Component {
        mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+this.state.chapter;
     } else{
       this.setState({chapter:1, pageListDisable:false})
-      mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/'+'1';
+      mangaApi = 'https://doodle-manga-scraper.p.mashape.com/mangareader.net/manga/'+this.state.series+'/1';
     }
     fetch(mangaApi, {
       headers:{'X-Mashape-Key':process.env.REACT_APP_SECRET_CODE}
