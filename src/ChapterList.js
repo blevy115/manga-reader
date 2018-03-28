@@ -79,7 +79,7 @@ class ChapterList extends Component{
         {this.state.genres.map(genre => <li className = 'series-genre' onClick ={() => {this.genreChoice({genre})} } >{genre}</li>)}
         </ul>
         <label>
-        Chapters
+        Chapter
         <select id="chapters" onChange={this.chapterChoice}>
           {Array.from({length: this.state.lastChapter}, (v, k) => k+1).map(number => <option value ={parseInt(number)}>{number}</option>)}
         </select>
@@ -90,7 +90,7 @@ class ChapterList extends Component{
     return(
       <span>
       <label>
-      Chapters
+      Chapter
       <select id="chapters"></select>
       </label>
       </span>

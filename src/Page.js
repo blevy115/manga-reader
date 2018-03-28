@@ -6,8 +6,14 @@ class Page extends Component {
     super(props)
     this.state = {
       page:"",
+      blank:true,
       majorDimension:""
     }
+  }
+
+  changeWindow(){
+    let pageHeight = document.getElementById('chapters');
+    pageHeight.scrollIntoView()
   }
 
   componentWillReceiveProps(props){
@@ -15,19 +21,25 @@ class Page extends Component {
       page:props.url
     })
     if (props.dimension){
-      this.setState({majorDimension:props.dimension})
-    }
-    if (props.url!==this.state.page){
-      let pageHeight = document.getElementById('pages');
-      pageHeight.scrollIntoView()
+      this.setState({majorDimension:props.dimension},
+      function(e){
+        if (this.state.blank===true){
+          this.setState({
+            blank:false
+          }, function(e){
+            this.changeWindow()
+          })
+        }
+      })
     }
   }
 
   componentDidUpdate(prevProps, prevState){
     if (this.state.page!==prevState.page){
-      this.props.majorDimension()
-      let pageHeight = document.getElementById('pages');
-      pageHeight.scrollIntoView()
+      this.props.majorDimension
+    }
+    if (this.props.url!==prevProps.page && document.getElementById('chapters').length>0){
+      this.changeWindow()
     }
   }
 
