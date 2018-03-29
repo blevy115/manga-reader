@@ -13,7 +13,7 @@ class Page extends Component {
 
   changeWindow(){
     let pageHeight = document.getElementById('chapters');
-    setTimeout(pageHeight.scrollIntoView(), 500)
+    setTimeout(pageHeight.scrollIntoView(), 800)
   }
 
   componentWillReceiveProps(props){
