@@ -6,7 +6,6 @@ class Page extends Component {
     super(props)
     this.state = {
       page:"",
-      blank:true,
       majorDimension:""
     }
   }
@@ -21,16 +20,7 @@ class Page extends Component {
       page:props.url
     })
     if (props.dimension){
-      this.setState({majorDimension:props.dimension},
-      function(e){
-        if (this.state.blank===true){
-          this.setState({
-            blank:false
-          }, function(e){
-            this.changeWindow()
-          })
-        }
-      })
+      this.setState({majorDimension:props.dimension})
     }
   }
 
