@@ -13,7 +13,7 @@ class Page extends Component {
 
   changeWindow(){
     let pageHeight = document.getElementById('chapters');
-    pageHeight.scrollIntoView()
+    setTimeout(pageHeight.scrollIntoView(), 500)
   }
 
   componentWillReceiveProps(props){
@@ -38,9 +38,6 @@ class Page extends Component {
     if (this.state.page!==prevState.page){
       this.props.majorDimension
     }
-    // if (this.props.url!==prevState.page && document.getElementById('chapters').length>0){
-    //     this.changeWindow()
-    // }
     if (document.getElementById('theImage').src===this.state.page && document.getElementById('chapters').length>0 && document.getElementById('pages').length>0){
       this.changeWindow()
     }
